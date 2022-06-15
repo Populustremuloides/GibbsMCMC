@@ -1,0 +1,7 @@
+node,mean_state,lower_bound90,upper_bound90
+priorMeanMu,0.0,0,0
+priorMeanSigma,1.0,1,1
+posteriorMu,5.675868162165366,5.683898462112555,5.683898462112555
+priorSigmaShape,1.0,1,1
+priorSigmaScale,1.0,1,1
+posteriorSigma,4.143381177738881,4.164099468059439,4.164099468059439
