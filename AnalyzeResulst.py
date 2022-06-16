@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 print("opening data")
-df = pd.read_csv("network_samples.csv")
+df = pd.read_csv("golf_network_samples.csv")
 cols = df.columns
 golfers = []
 tournaments = []

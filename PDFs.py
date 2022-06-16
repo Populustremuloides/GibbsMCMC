@@ -23,49 +23,52 @@ import scipy
 from scipy.special import loggamma
 
 # normal
-def normalPDF(x, args):
-    mu = args["mu"]
-    sigma = args["sigma"]
-    try:
-        density = (1 / (sigma * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((x - mu) / sigma) ** 2)
-    except:
-        density = 0
-    return density
+# def normalPDF(x, args):
+#     mu = args["mu"]
+#     sigma = args["sigma"]
+#     try:
+#         density = (1 / (sigma * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((x - mu) / sigma) ** 2)
+#     except:
+#         density = 0
+#     return density
 
 def logNormalPDF(x, args):
     mu = args["mu"]
     sigma = args["sigma"]
     # density = stats.lognorm.pdf(x, s=1, loc=mu, scale=sigma)
     density = -(1 / 2) * (np.log(sigma) - (sigma * ((x - mu) ** 2)))
-    return density
+    return density * -1
 
 # Gamma
-def gammaPDF(x, args):
-    shape = args["shape"]
-    scale = args["scale"]
-    return gammaDistribution.pdf(x, a=shape, scale=scale)
+# def gammaPDF(x, args):
+#     shape = args["shape"]
+#     scale = args["scale"]
+#     return gammaDistribution.pdf(x, a=shape, scale=scale)
 
 def logGammaPDF(x, args):
     shape = args["shape"]
     scale = args["scale"]
     if x < 0:
-        return 0
+        density = 0
     else:
-        return loggamma(shape) + scale * np.log(scale) + (shape - 1) * np.log(x)
+        density = loggamma(shape) + scale * np.log(scale) + (shape - 1) * np.log(x)
+    return density * -1
     # return logGammaDistribution.pdf(x, c=shape, scale=scale)
 
 
 def inverseLogGammaPDF(x, args):
     if x < 0:
-        return 0
+        density = 0
     else:
-        return logGammaPDF(1 / x, args)
+        density = logGammaPDF(1 / x, args)
+    return density * -1
 
-def inverseGammaPDF(x, args):
-    if x < 0:
-        return 0
-    else:
-        return gammaPDF(x, args)
+# def inverseGammaPDF(x, args):
+#     if x < 0:
+#         density = 0
+#     else:
+#         density = gammaPDF(x, args)
+#     return density
 #
 # xs = np.linspace(0,10,100)
 # args = {"shape":2,"scale":7.5}
@@ -88,13 +91,14 @@ def inverseGammaPDF(x, args):
 # plt.show()
 
 # Poisson
-def poissonPMF(k, args):
-    if k != int(k):
-        return 0
-    if k < 1:
-        return 0
-    lamda = args["lamda"]
-    return np.log(poissonDistribution.pmf(k=k, mu=lamda))
+# def poissonPMF(k, args):
+#     if k != int(k):
+#         return 0
+#     if k < 1:
+#         return 0
+#     lamda = args["lamda"]
+#     density = np.log(poissonDistribution.pmf(k=k, mu=lamda))
+#     return density * -1
 
 def logPoissonPMF(k, args):
     if k != int(k):
@@ -102,7 +106,8 @@ def logPoissonPMF(k, args):
     if k < 1:
         return 0
     lamda = args["lamda"]
-    return -lamda + (k * np.log(lamda) - (loggamma(k - 1)))
+    density =  -lamda + (k * np.log(lamda) - (loggamma(k - 1)))
+    return density * -1
     # return np.log(poissonDistribution.pmf(k=k, mu=lamda))
 # xs = np.arange(1,20)
 # lamda = 2
@@ -112,15 +117,16 @@ def logPoissonPMF(k, args):
 # plt.title("example log poisson distribution")
 # plt.show()
 # Beta
-def betaPDF(x, args):
-    if x < 0:
-        return 0
-    if x > 1:
-        return 0
-
-    alpha = args["alpha"]
-    beta = args["beta"]
-    return x ** (alpha - 1) * (1 - x) ** (beta - 1) / betaFunction(alpha, beta)
+# def betaPDF(x, args):
+#     if x < 0:
+#         return 0
+#     if x > 1:
+#         return 0
+#
+#     alpha = args["alpha"]
+#     beta = args["beta"]
+#     density = x ** (alpha - 1) * (1 - x) ** (beta - 1) / betaFunction(alpha, beta)
+#     return density
 
 def logBetaPDF(x, args):
     if x < 0:
@@ -130,7 +136,8 @@ def logBetaPDF(x, args):
 
     alpha = args["alpha"]
     beta = args["beta"]
-    return loggamma(alpha + beta) - loggamma(alpha) - loggamma(beta) + ((alpha - 1) * np.log(x)) + ((beta - 1) * np.log(1 - x))
+    density = loggamma(alpha + beta) - loggamma(alpha) - loggamma(beta) + ((alpha - 1) * np.log(x)) + ((beta - 1) * np.log(1 - x))
+    return density * -1
     # return np.log(x ** (alpha - 1) * (1 - x) ** (beta - 1) / betaFunction(alpha, beta))
 
 

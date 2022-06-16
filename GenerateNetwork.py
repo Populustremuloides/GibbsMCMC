@@ -47,6 +47,7 @@ def generateNetwork():
         hyperTournMeanLinker = LinkerNode([hyperTournMean], getParentState) # linker to dynamically grab state from parents
         hyperTournVarLinker = LinkerNode([hyperTournVar], getParentState) # linker to dynamically grab state from parents
         node = NormalNode(mu=hyperTournMeanLinker, sigma=hyperTournVarLinker, name="TOURNAMENT_" + tourney)
+        node.state = 72
         network.append(node)
         tourneysToNodes[tourney] = node
         tourneysToChildren[tourney] = [] # initialize this for use later

@@ -30,7 +30,7 @@ class Node():
     def getProbabilityRelativeToObservedChildren(self, x, xPrime):
         densitiesCurrent = 1
         for child in self.children:
-            if child.observed:
+            # if child.observed: # FIXME: put this back
                 observedChildState = child.state
                 density = child.pdf(observedChildState)
                 densitiesCurrent = densitiesCurrent + density
@@ -39,7 +39,7 @@ class Node():
         self.state = xPrime
         densitiesCandidate = 1
         for child in self.children:
-            if child.observed:
+            # if child.observed: # FIXME: put this back
                 observedChildState = child.state
                 density = child.pdf(observedChildState)
                 densitiesCandidate = densitiesCandidate + density
@@ -79,9 +79,9 @@ class Node():
 
         # decide whether to keep the candidate value
         acceptanceProb = np.min([1, a1 + a2])
-        randomNum = np.log(np.random.uniform())
+        randomNum = -np.log(np.random.uniform())
 
-        if randomNum > acceptanceProb:
+        if randomNum < acceptanceProb: # FIXME: put this back to a >
             self.state = xPrime
         else:
             self.state = x
@@ -157,16 +157,16 @@ class GammaNode(Node):
         self.gType = gType
         self.name = name
 
-        if self.gType == "inverse":
-            self.pdfFunction = inverseGammaPDF
-        elif self.gType == "log":
+        # if self.gType == "inverse":
+        #     self.pdfFunction = inverseGammaPDF
+        if self.gType == "log":
             self.pdfFunction = logGammaPDF
         elif self.gType == "logInverse":
             self.pdfFunction = inverseLogGammaPDF
-        elif self.gType == "typical":
-            self.pdfFunction = gammaPDF
+        # elif self.gType == "typical":
+        #     self.pdfFunction = gammaPDF
         else:
-            print("error: gamma distribution incorrectly specified. Node not initialized properly.")
+            print("error: gamma distribution incorrectly specified. Node" + self.name + " not initialized properly.")
 
         # check if the parameters are pre-determined or vary based on another node
         if (type(shape) == type(1)) or (type(shape) == type(1.)):
@@ -201,7 +201,7 @@ class PoissonNode(Node):
         super().__init__()
         self.state = 0
         self.args = {"lamda":1,"round":True}
-        self.pdfFunction = poissonPMF
+        self.pdfFunction = logPoissonPMF
         self.name = name
 
         # check if the parameters are pre-determined or vary based on another node

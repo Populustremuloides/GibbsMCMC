@@ -1,4 +1,4 @@
-from GenerateCrazyNetwork import generateNetwork # Ajust this to change which network comes in
+from GenerateNetwork import generateNetwork # Ajust this to change which network comes in
 import pandas as pd
 from tqdm import tqdm
 
@@ -15,7 +15,7 @@ def recordSamples(dataDict, network, unobservedIndices):
         dataDict[name].append(state)
     return dataDict
 
-outputFile = "crazy_network_samples.csv"
+outputFile = "golf_network_samples.csv"
 
 print("initializing network")
 network,unobservedIndices = generateNetwork()
@@ -28,7 +28,7 @@ for index in unobservedIndices:
 
 # generate a gazillion samples
 numSamples = 1000000
-saveInterval = 10000
+saveInterval = 100
 loop = tqdm(total=numSamples)
 for i in range(numSamples):
     for index in unobservedIndices:
