@@ -1,4 +1,4 @@
-from GenerateCrazyNetwork import generateNetwork # Ajust this to change which network comes in
+from GenerateMyOwnNetwork import generateNetwork # Ajust this to change which network comes in
 import pandas as pd
 from tqdm import tqdm
 
@@ -15,7 +15,7 @@ def recordSamples(dataDict, network, unobservedIndices):
         dataDict[name].append(state)
     return dataDict
 
-outputFile = "crazy_network_samples.csv"
+outputFile = "gaussian_process_network_samples.csv"
 
 print("initializing network")
 network,unobservedIndices = generateNetwork()

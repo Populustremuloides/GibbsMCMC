@@ -36,7 +36,7 @@ def generateNetwork():
 
     # F
     F = PoissonNode(lamda=dLinker, name="F")
-    F.state = 2
+    F.state = 10
 
     # G
     fLinker = LinkerNode([F], getParentState)
