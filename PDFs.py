@@ -103,10 +103,10 @@ def inverseLogGammaPDF(x, args):
 def logPoissonPMF(k, args):
     if k != int(k):
         return 0
-    if k < 1:
+    if k < 0:
         return 0
     lamda = args["lamda"]
-    density =  -lamda + (k * np.log(lamda) - (loggamma(k - 1)))
+    density = -lamda + (k * np.log(lamda) - (loggamma(k - 1)))
     return density * -1
     # return np.log(poissonDistribution.pmf(k=k, mu=lamda))
 # xs = np.arange(1,20)

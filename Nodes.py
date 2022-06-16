@@ -28,6 +28,7 @@ class Node():
         self.initialized = False
 
     def getProbabilityRelativeToObservedChildren(self, x, xPrime):
+
         densitiesCurrent = 1
         for child in self.children:
             # if child.observed: # FIXME: put this back
@@ -51,6 +52,9 @@ class Node():
         return True
 
     def metropolisSampler(self):
+        # if self.name == "F":
+        #     print("time to pause")
+
         xPrime = np.random.normal(loc=self.state, scale=self.sampleVariance)
 
         # hack to make the sampler more efficient in the case of limited-support distributions
@@ -78,7 +82,8 @@ class Node():
         a2 = self.getProbabilityRelativeToObservedChildren(x, xPrime)
 
         # decide whether to keep the candidate value
-        acceptanceProb = np.min([1, a1 + a2])
+        # acceptanceProb = np.min([1, a1 + a2])
+        acceptanceProb = a1 + a2
         randomNum = -np.log(np.random.uniform())
 
         if randomNum < acceptanceProb: # FIXME: put this back to a >
@@ -215,7 +220,7 @@ class PoissonNode(Node):
         self.sampleVariance = sampleVariance
 
     def inSupport(self, x):
-        if x < 1:
+        if x < 0:
             return False
         return True
 
@@ -276,6 +281,12 @@ class BernouliNode(Node):
 
         self.p = p # either an int or a pointer to a node
         self.sampleVariance = sampleVariance
+
+    def pdf(self, x):
+        if x > self.args["p"]:
+            return 1 - self.args["p"]
+        else:
+            return self.args["p"]
 
     def updateArgs(self):
         if not self.pPredetermined:
