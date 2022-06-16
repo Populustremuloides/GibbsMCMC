@@ -10,4 +10,4 @@ You can find the results under the files
 
 [golfer_results.csv](golfer_results.csv)
 
-[gaussian_results.csv](gaussian_results.csv) (You'll notice that this one shows how a gaussian process is like gibbs sampling. Kinda fun!)
+[gaussian_results.csv](gaussian_results.csv) (You'll notice that this one shows how a gaussian process is like gibbs sampling. The nodes A, G, and J were observed as 0, 10, and 0, respectively. Kinda fun!)
